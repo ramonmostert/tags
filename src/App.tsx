@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from '@emotion/styled';
+import TagsPage from './pages/Tags';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-function App() {
+const queryClient = new QueryClient();
+
+const Root = styled.main({
+  backgroundColor: '#0093c4',
+  fontFamily: "'Source Sans Pro', sans-serif;",
+  minHeight: '100vh',
+  fontWeight: 300
+});
+
+function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Root>
+        <TagsPage />
+      </Root>
+    </QueryClientProvider>
   );
 }
 
