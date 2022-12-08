@@ -10,7 +10,8 @@ interface ButtonProps {
 const Root = styled.button(({ color }) => ({
   backgroundColor: color,
   border: 'none',
-  color: '#fff'
+  color: '#fff',
+  cursor: 'pointer'
 }));
 
 const Button = ({ onClick, children, className, color = '#d84315' }: ButtonProps): JSX.Element => {
