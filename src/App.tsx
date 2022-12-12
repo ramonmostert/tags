@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import TagsPage from './pages/Tags';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
+import FirebaseContextProvider from './services/firebase/FirebaseContext';
 const queryClient = new QueryClient();
 
 const Root = styled.main({
@@ -13,11 +13,13 @@ const Root = styled.main({
 
 function App(): JSX.Element {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Root>
-        <TagsPage />
-      </Root>
-    </QueryClientProvider>
+    <FirebaseContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <Root>
+          <TagsPage />
+        </Root>
+      </QueryClientProvider>
+    </FirebaseContextProvider>
   );
 }
 

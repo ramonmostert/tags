@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 interface TextInputProps {
   name: string;
   value: string;
-  className?: string;
   id: string;
   placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 const Root = styled.input({

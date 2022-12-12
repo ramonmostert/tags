@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 import { Tag } from '../../types/Tag';
 import Button from '../Button/Button';
 import TextInput from '../TextInput/TextInput';
-interface TagListProps extends Tag {
+
+interface TagListItemProps extends Tag {
   onDelete: () => void;
   onChange: (id: string, value: string) => void;
+  disabled?: boolean;
 }
 
 const Root = styled.li({
@@ -23,7 +25,13 @@ const StyledButton = styled(Button)({
   flex: '0 0 100px'
 });
 
-const TagListItem = ({ id, name, onDelete, onChange }: TagListProps): JSX.Element => {
+const TagListItem = ({
+  id,
+  name,
+  onDelete,
+  onChange,
+  disabled = false
+}: TagListItemProps): JSX.Element => {
   return (
     <Root role="listitem">
       <StyledInput
@@ -34,7 +42,9 @@ const TagListItem = ({ id, name, onDelete, onChange }: TagListProps): JSX.Elemen
           onChange(id, e.target.value);
         }}
       />
-      <StyledButton onClick={onDelete}>delete</StyledButton>
+      <StyledButton onClick={onDelete} {...{ disabled }}>
+        delete
+      </StyledButton>
     </Root>
   );
 };
