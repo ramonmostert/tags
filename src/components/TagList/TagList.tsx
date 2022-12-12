@@ -5,7 +5,8 @@ interface TagListProps {
 }
 
 const Root = styled.ul({
-  padding: 0
+  padding: 0,
+  transition: 'max-height 250ms'
 });
 
 const TagList = ({ children }: TagListProps): JSX.Element => {

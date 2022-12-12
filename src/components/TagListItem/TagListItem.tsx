@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import styled from '@emotion/styled';
 import { Tag } from '../../types/Tag';
 import Button from '../Button/Button';
@@ -8,6 +9,7 @@ interface TagListItemProps extends Tag {
   onDelete: () => void;
   onChange: (id: string, value: string) => void;
   disabled?: boolean;
+  delay?: number;
 }
 
 const Root = styled.li({
@@ -31,9 +33,22 @@ const TagListItem = ({
   name,
   onDelete,
   onChange,
+  delay = 0,
   disabled = false
 }: TagListItemProps): JSX.Element => {
+  const elRef = useRef(null);
   const [changed, setChanged] = useState<string>('');
+
+  useEffect(() => {
+    gsap.timeline().fromTo(
+      elRef.current,
+      {
+        overflow: 'hidden',
+        opacity: 0
+      },
+      { opacity: 1, delay }
+    );
+  }, []);
 
   const changeHandler = (): void => {
     onChange(id, changed);
@@ -49,7 +64,7 @@ const TagListItem = ({
   }, [changed, name]);
 
   return (
-    <Root role="listitem">
+    <Root role="listitem" ref={elRef}>
       <StyledInput
         id={`tag-list-item-input-${id}}`}
         name={`tag-list-item-input-${id}}`}

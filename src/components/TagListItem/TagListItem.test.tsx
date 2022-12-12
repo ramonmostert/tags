@@ -36,7 +36,9 @@ test('fires onChange callback', async () => {
   );
 
   const input = screen.getByRole('textbox');
-  userEvent.clear(input);
+  userEvent.type(input, 'changed');
 
+  const updateButton = screen.getByText('update');
+  userEvent.click(updateButton);
   expect(onChangeMock).toHaveBeenCalledTimes(1);
 });

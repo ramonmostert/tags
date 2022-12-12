@@ -9,12 +9,14 @@ import { Tag } from '../types/Tag';
 import TagListItem from '../components/TagListItem/TagListItem';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useFirebaseContext } from '../services/firebase/FirebaseContext';
+
 const Root = styled.div({
   minHeight: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  width: '100%'
+  paddingTop: 100,
+  width: '100%',
+  '@media (min-width: 768px)': {
+    paddingTop: 200
+  }
 });
 
 const StyledInput = styled(TextInput)({
@@ -97,10 +99,11 @@ const TagsPage = (): JSX.Element => {
       <Container>
         <h1>Your tags</h1>
         <TagList>
-          {items.map((tag) => (
+          {items.map((tag, index) => (
             <TagListItem
               disabled={addMutation.isLoading}
               key={tag.id}
+              delay={index * 0.1}
               {...tag}
               onChange={(id, value) => handleChange(id, value)}
               onDelete={() => handleRemove(tag.id)}
