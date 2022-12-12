@@ -66,6 +66,7 @@ const TagsPage = (): JSX.Element => {
   };
 
   const handleAdd = (): void => {
+    if (newTag === '') return;
     const tag: Tag = { name: newTag, id: uuid() };
     addMutation.mutate(tag);
   };
