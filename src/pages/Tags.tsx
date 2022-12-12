@@ -61,6 +61,17 @@ const TagsPage = (): JSX.Element => {
     }
   );
 
+  const updateMutation = useMutation(
+    async (tag: Tag): Promise<Tag | undefined> => await firebase?.setTag(tag),
+    {
+      onSuccess: (newData) => {
+        const newItems = [...data.filter((item) => item.id !== newData?.id), newData];
+
+        queryClient.setQueryData('tags', newItems);
+      }
+    }
+  );
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewTag(e.target.value);
   };
@@ -76,20 +87,22 @@ const TagsPage = (): JSX.Element => {
   };
 
   const handleChange = (id: string, name: string): void => {
-    addMutation.mutate({ id, name });
+    updateMutation.mutate({ id, name });
   };
+
+  const items = data.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <Root>
       <Container>
         <h1>Your tags</h1>
         <TagList>
-          {data.map((tag) => (
+          {items.map((tag) => (
             <TagListItem
               disabled={addMutation.isLoading}
               key={tag.id}
               {...tag}
-              onChange={handleChange}
+              onChange={(id, value) => handleChange(id, value)}
               onDelete={() => handleRemove(tag.id)}
             />
           ))}

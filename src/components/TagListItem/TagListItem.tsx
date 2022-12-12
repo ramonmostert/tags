@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { Tag } from '../../types/Tag';
 import Button from '../Button/Button';
@@ -32,18 +33,34 @@ const TagListItem = ({
   onChange,
   disabled = false
 }: TagListItemProps): JSX.Element => {
+  const [changed, setChanged] = useState<string>('');
+
+  const changeHandler = (): void => {
+    onChange(id, changed);
+    setChanged('');
+  };
+
+  const value = useMemo(() => {
+    if (changed === '') {
+      return name;
+    }
+
+    return changed;
+  }, [changed, name]);
+
   return (
     <Root role="listitem">
       <StyledInput
         id={`tag-list-item-input-${id}}`}
-        value={name}
         name={`tag-list-item-input-${id}}`}
-        onChange={(e) => {
-          onChange(id, e.target.value);
-        }}
+        onChange={(e) => setChanged(e.target.value)}
+        {...{ value }}
       />
-      <StyledButton onClick={onDelete} {...{ disabled }}>
-        delete
+      <StyledButton
+        color={changed === '' ? '#d84315' : '#558b2f'}
+        onClick={changed === '' ? onDelete : changeHandler}
+        {...{ disabled }}>
+        {changed === '' ? 'delete' : 'update'}
       </StyledButton>
     </Root>
   );

@@ -14,6 +14,7 @@ const Root = styled.button(({ color }) => ({
   color: '#fff',
   cursor: 'pointer',
   padding: '12px 8px',
+  transition: 'background-color 200ms',
   ':disabled': {
     backgroundColor: '#444'
   }
